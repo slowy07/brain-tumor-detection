@@ -94,3 +94,76 @@ def datasets(args, mode = 'train', image_color_mode = "grayscale", label_color_m
     )
     data_generator1 = zip(image_generator1, label_generator1)
     cnt = 0
+
+    if mode == 'test' or mode == 'valid':
+        for img, label in data_generator1:
+            img, label = adjust_data(img, label, args.data, cnt)
+            cnt += img.shape[0]
+            yield(img, label)
+
+    else:
+        image_generator2 = image_datagen.flow_from_directory(
+            args.image_root,
+            classes = [args.image_folder2],
+            class_mode = None,
+            color_mode = image_color_mode,
+            target_size = target_size,
+            batch_size = args.batch_size,
+            save_to_dir = save_to_dir,
+            save_prefix  = image_save_prefix,
+            shuffle = shuffle,
+            seed = seed+1)
+
+        label_generator2 = label_datagen.flow_from_directory(
+            args.label_root,
+            classes = [args.label_folder2],
+            class_mode = None,
+            color_mode = label_color_mode,
+            target_size = target_size,
+            batch_size = args.batch_size,
+            save_to_dir = save_to_dir,
+            save_prefix  = label_save_prefix,
+            shuffle = shuffle,
+            seed = seed+1)
+        data_generator2 = zip(image_generator2, label_generator2)
+
+        while(True):
+            if np.random.randint(3) == 2:
+                for img, label in data_generator1:
+                    img, label = adjust_data(img, label, args.data, cnt, 'F')
+                    cnt += img.shape[0]
+                    yield(img, label)
+            else:
+                for img, label in data_generator2:
+                    img, label = adjust_data(img, label, args.data, cnt, 'S')
+                    cnt += img.shape[0]
+                    yield(img, label)
+
+def save_result(args, output):
+    ''' Save Prediction results overlapping on original MRI images
+    Args:
+        args (argparse):    Arguments parsered in command-lind
+        output (np.array):  Prediction Results by segementation model
+    '''
+    file_path = []
+    file_path += glob.glob(os.path.join(args.image_root, args.image_folder1, '*.jpg'))
+    file_path = sorted(file_path)
+
+    output = np.argmax(output, axis=-1)*255
+    kernel = np.ones((5,5),np.uint8)
+
+    for i in range(output.shape[0]):
+        save_path = os.path.join(args.output_root, str(i)+'.jpg')
+
+        img = cv2.imread(file_path[i])
+        pred = cv2.morphologyEx(output[i].astype(np.uint8), cv2.MORPH_OPEN, kernel)
+        pred = cv2.morphologyEx(pred, cv2.MORPH_CLOSE, kernel)
+        pred = np.expand_dims(pred, axis=2)
+        zeros = np.zeros(pred.shape)
+        pred = np.concatenate((zeros,zeros,pred), axis=2)
+        img = img + pred
+        if img.max() > 0:
+            img = (img/img.max())*255
+        else:
+            img = (img/1)*255
+        cv2.imwrite(save_path, img)
