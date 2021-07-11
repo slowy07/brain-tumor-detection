@@ -42,7 +42,7 @@ def adjust_data(img, label, data, cnt, val ='F'):
 
     return img, label
 
-def datasets(args, mode = 'train', image_color_mode = "grayscale", label_color_mode = "grayscale", image_save_prefix = "image", label_save_prefix = "label", save_to_dir = None, target_size = (240,240), seed = 1):
+def dataset(args, mode = 'train', image_color_mode = "grayscale", label_color_mode = "grayscale", image_save_prefix = "image", label_save_prefix = "label", save_to_dir = None, target_size = (240,240), seed = 1):
     ''' Prepare dataset ( pre-processing + augmentation(optional) )
     Args:
         args (argparse):          Arguments parsered in command-lind
