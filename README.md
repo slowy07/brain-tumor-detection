@@ -3,6 +3,7 @@
 ![tensorflow](https://img.shields.io/badge/TensorFlow-FF6F00?style=for-the-badge&logo=TensorFlow&logoColor=white)
 ![pytorch](https://img.shields.io/badge/PyTorch-EE4C2C?style=for-the-badge&logo=PyTorch&logoColor=white)
 ![jupyter_notebook](https://img.shields.io/badge/Jupyter-F37626.svg?&style=for-the-badge&logo=Jupyter&logoColor=white)
+[![license](https://img.shields.io/github/license/slowy07/brain-tumor-detection?style=for-the-badge)](LICENSE)
 
 content on brain-tumor-detection contain:
 - [requirements for installation](#requirements)
@@ -64,7 +65,14 @@ Each input x (image) has a shape of (240, 240, 3) and is fed into the neural net
 
 **why this architecture**
 
-i applied transfer learning using ResNet and ```vgg-16``` but these models were too complex to data size and were overfitting, of course, you may get good result applying transfer learning with these models using data augmentation, i'm using training on computer with AMD ryzen 7 4800H and 16GB memory. so, i had to take into consideration computational complexity and memory limitations
+i applied transfer learning using ResNet and ```vgg-16``` but these models were too complex to data size and were overfitting, of course, you may get good result applying transfer learning with these models using data augmentation, i'm using training on computer with 8 core of CPU AMD ryzen 7 4800H and 16GB memory. so, i had to take into consideration computational complexity and memory limitations
+
+**(my)specs for testing**
+
+![amdryzen](https://img.shields.io/badge/AMD-Ryzen_7_4800H-ED1C24?style=for-the-badge&logo=amd&logoColor=white)
+![vga](https://img.shields.io/badge/NVIDIA-GTX1650-76B900?style=for-the-badge&logo=nvidia&logoColor=white)
+![linux](https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black)
+
 
 ## training the model
 the model was trained for 24 epochs and these are the loss and accuracy plots
