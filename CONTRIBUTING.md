@@ -13,6 +13,27 @@ We use github to host code, to track issues and feature requests, as well as acc
 1. Fork the repo and create your branch from `main`.
 2. If you've added code that should be commented for information
 3. Make sure your code lints.
+4. commit with simple information, example:
+   - `docs: adding documentation or fixing documentation`
+   - `fix: fix some code with change minor and major`
+   - `update: update more spesific code for more efficient`
+5. push with your prject branch
+```bash
+git push origin your_custom_branch
+```
+
+## pull request
+start description of pull request, try to speak well, respectfully, and say hello, and provide detailed explanations that are easy to read and understand
+with the example
+```
+## description
+explain your changes with detail information
+
+## change
+code example of changes
+
+thanks !!
+```
 
 ## Any contributions you make will be under the MIT Software License
 In short, when you submit code changes, your submissions are understood to be under the same [MIT License](http://choosealicense.com/licenses/mit/) that covers the project. Feel free to contact the maintainers if that's a concern.
